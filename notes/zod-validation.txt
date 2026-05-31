@@ -23,7 +23,21 @@ which effectively includes all symbols and punctuation (special characters)
 
 such as:!, @, #, $, %, ^, &, *, (, ), -, _, +, =, etc.It also includes spaces, tabs, and line breaks.
 ===== xxxx ====
+
 ===== xxxx ====
+how front end will see the validation errors:
+{
+  "success": false,
+  "message": "Validation Error",
+  "errors": [
+    { "field": "email", 
+    "message": "Invalid email address" 
+    },
+    { "field": "password", 
+    "message": "Password must be at least 8 characters long" 
+    },
+  ]
+}
 ===== xxxx ====
 ===== xxxx ====
 ===== xxxx ====

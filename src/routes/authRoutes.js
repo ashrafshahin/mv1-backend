@@ -4,6 +4,8 @@ const router = express.Router()
 const { register, login, refreshToken } = require('../controllers/authController');
 const { verifyEmail } = require('../controllers/verifyEmail');
 const { protect, restrictTo } = require('../middlewares/authMiddleware');
+const { validate } = require('../models/userSchema');
+const { registrationSchemaValidation, loginSchemaValidation } = require('../validations/auth.validation');
 
 /**
  * @swagger
@@ -164,8 +166,8 @@ const { protect, restrictTo } = require('../middlewares/authMiddleware');
  *         description: Server Error
  */
 
-router.post('/register', register);
-router.post('/login', login);
+router.post('/register',validate(registrationSchemaValidation), register);
+router.post('/login',validate(loginSchemaValidation), login);
 router.post('/refresh-token/:token', refreshToken);
 
 router.get('/verify-email', verifyEmail);
