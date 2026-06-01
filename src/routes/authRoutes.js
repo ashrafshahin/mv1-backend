@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router()
 
-const { registerController, loginController, refreshTokenController } = require('../controllers/authController');
+
 const { verifyEmail } = require('../controllers/verifyEmail');
 const { protect, restrictTo } = require('../middlewares/authMiddleware');
-const { validate } = require('../models/userSchema');
 const { registrationSchemaValidation, loginSchemaValidation } = require('../validations/auth.validation');
+const { registerController, loginController, refreshTokenController, logOutController, logOutAllDevicesController } = require('../controllers/authController');
+const validateMiddleware = require('../middlewares/validateMiddleware');
 
 /**
  * @swagger
@@ -166,13 +167,16 @@ const { registrationSchemaValidation, loginSchemaValidation } = require('../vali
  *         description: Server Error
  */
 
-router.post('/register',validate(registrationSchemaValidation), registerController);
-router.post('/login',validate(loginSchemaValidation), loginController);
-router.post('/refresh-token/:token', refreshTokenController);
+
+router.post('/register', validateMiddleware(registrationSchemaValidation), registerController);
+router.post('/login', validateMiddleware(loginSchemaValidation), loginController);
+router.post('/refresh-token', refreshTokenController);
+router.post('/logout', logOutController)
+router.post('/logout-all-devices',protect, logOutAllDevicesController)
 
 router.get('/verify-email', verifyEmail);
 
-router.get('/admin/dashboard', protect, restrictTo('admin'))
+// router.get('/admin/dashboard', protect, restrictTo('admin'))
 
 
 module.exports = router;

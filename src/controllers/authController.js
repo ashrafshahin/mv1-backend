@@ -225,7 +225,7 @@ exports.logOutController = async (req, res) => {
         // cookies theke token clear..
         res.clearCookie('refreshToken', {
             httpOnly: true,
-            secure: process.env.NODE_ENV == 'production',
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict'
         })
 
@@ -244,6 +244,7 @@ exports.logOutController = async (req, res) => {
 // Logout from current and all Devices...
 exports.logOutAllDevicesController = async (req, res) => {
     try {
+        console.log(req.user, 'request user error ...');
         const user = await User.findById(req.user.id)
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found...' })
@@ -253,9 +254,9 @@ exports.logOutAllDevicesController = async (req, res) => {
         await user.save()
 
         // clear cookies
-        res.clearCookie('refreshtoken', {
+        res.clearCookie('refreshToken', {
             httpOnly: true,
-            secure: process.env.NODE_ENV == 'production',
+            secure: process.env.NODE_ENV === 'production',
             sameSite:'strict'
         })
 

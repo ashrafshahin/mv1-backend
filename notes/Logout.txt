@@ -8,4 +8,6 @@
 404 
 
 
+logout all devices postman check
+Authorization => Bearer Token = > login kore je token paiso paste koro //
 

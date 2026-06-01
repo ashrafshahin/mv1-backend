@@ -39,7 +39,28 @@ how front end will see the validation errors:
   ]
 }
 ===== xxxx ====
+error [validate Middleware conflict korchilo ]
+// console.log(refreshTokenController);
+// console.log(typeof refreshTokenController);
+// console.log(logOutController);
+// console.log(typeof logOutController);
+// console.log(logOutAllDevicesController);
+// console.log(typeof logOutAllDevicesController);
+
+console.log(validateMiddleware);
+console.log(typeof validateMiddleware);
+
+console.log(validate(registrationSchemaValidation));
+console.log(typeof validate(registrationSchemaValidation));
+
+console.log(registerController);
+console.log(typeof registerController);
 ===== xxxx ====
+aita hobe na
+const { validate } = require('../models/userSchema'); 
+
+aita hobe 
+const validateMiddleware = require('../middlewares/validateMiddleware');
 ===== xxxx ====
 ===== xxxx ====
 ===== xxxx ====
