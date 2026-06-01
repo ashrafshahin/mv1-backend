@@ -1,0 +1,11 @@
+
+//logout part
+// user.refreshTokens = user.refreshTokens.filter(rt => rt.token !== refreshToken)
+// oi token chara baki sob gula o array moto kore debe...
+// new array ready hobe oi token chara then save() kore debo
+
+204 content not found, token pawa jai nai
+404 
+
+
+

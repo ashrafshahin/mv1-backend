@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 
-const { register, login, refreshToken } = require('../controllers/authController');
+const { registerController, loginController, refreshTokenController } = require('../controllers/authController');
 const { verifyEmail } = require('../controllers/verifyEmail');
 const { protect, restrictTo } = require('../middlewares/authMiddleware');
 const { validate } = require('../models/userSchema');
@@ -166,9 +166,9 @@ const { registrationSchemaValidation, loginSchemaValidation } = require('../vali
  *         description: Server Error
  */
 
-router.post('/register',validate(registrationSchemaValidation), register);
-router.post('/login',validate(loginSchemaValidation), login);
-router.post('/refresh-token/:token', refreshToken);
+router.post('/register',validate(registrationSchemaValidation), registerController);
+router.post('/login',validate(loginSchemaValidation), loginController);
+router.post('/refresh-token/:token', refreshTokenController);
 
 router.get('/verify-email', verifyEmail);
 

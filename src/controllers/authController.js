@@ -4,9 +4,10 @@ const { validationResult } = require('express-validator');
 const verificationToken = require('../models/verificationToken');
 const nodemailer = require('nodemailer')
 const { v4: uuidv4 } = require('uuid');
+const { success } = require('zod');
 
 
-exports.register = async (req, res) => {
+exports.registerController = async (req, res) => {
     try {
         const { name, email, password, phone, role } = req.body;
 
@@ -90,7 +91,7 @@ exports.register = async (req, res) => {
     }
 };
 
-exports.login = async (req, res) => {
+exports.loginController = async (req, res) => {
     try {
         const { email, password } = req.body
         // Check no Empty input...
@@ -163,7 +164,7 @@ exports.login = async (req, res) => {
     }
 }
 
-exports.refreshToken = async (req, res) => {
+exports.refreshTokenController = async (req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken;
         if (!refreshToken) {
@@ -205,8 +206,72 @@ exports.refreshToken = async (req, res) => {
         return res.status(500).json({ success: false, message: 'Server error' })
     }
 }
+// Logout from current device...
+exports.logOutController = async (req, res) => {
+    try {
+        const refreshToken = req.cookies.refreshToken
+        if (!refreshToken) {
+           return res.status(204).send()
+        }
+        // find user
+        const user = await User.findOne({
+            refreshTokens: { $elemMatch: { token: refreshToken } }
+        })
+        // after found user
+        if (user) {
+            user.refreshTokens = user.refreshTokens.filter(rt => rt.token !== refreshToken)
+            await user.save()
+        }
+        // cookies theke token clear..
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV == 'production',
+            sameSite: 'strict'
+        })
+
+        res.status(200).json({
+            success: true,
+            message: 'Logged out successfully...'
+        })
 
 
+    } catch (error) {
+        console.log(error, 'Logout error...');
+        return res.status(500).json({ success: false, message: 'Server Error during logout' })
+    }
+}
+
+// Logout from current and all Devices...
+exports.logOutAllDevicesController = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id)
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found...' })
+        }
+        // refresh tokens clear kore delam
+        user.refreshTokens = []
+        await user.save()
+
+        // clear cookies
+        res.clearCookie('refreshtoken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV == 'production',
+            sameSite:'strict'
+        })
+
+        res.status(200).json({
+            success: true,
+            message: 'Logged Out from All Devices...'
+        })
+        
+    } catch (error) {
+        console.log(error, 'Logout All Devices Error...');
+        return res.status(500).json({
+            success: false,
+            message: 'Server Error during logout all Devices...'
+        })
+    }
+}
 
 
 
