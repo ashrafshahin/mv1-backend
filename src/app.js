@@ -10,6 +10,7 @@ const dbConfig = require('./config/dbConfig');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./config/swagger');
+const { apiLimiter } = require('./middlewares/rateLimiter');
 
 
 const app = express()
@@ -24,6 +25,7 @@ app.use(cookieParser())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs) )
 
 // Routes 
+app.use('/api/v1/', apiLimiter)
 app.use('/api/v1/auth', authRoutes)
 
 // Database configaration...
