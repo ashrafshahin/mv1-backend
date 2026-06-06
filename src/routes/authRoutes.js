@@ -7,6 +7,7 @@ const { protect, restrictTo } = require('../middlewares/authMiddleware');
 const { registrationSchemaValidation, loginSchemaValidation } = require('../validations/auth.validation');
 const { registerController, loginController, refreshTokenController, logOutController, logOutAllDevicesController } = require('../controllers/authController');
 const validateMiddleware = require('../middlewares/validateMiddleware');
+const { registerLimiter, loginLimiter, refreshTokenLimiter } = require('../middlewares/rateLimiter');
 
 /**
  * @swagger
@@ -168,9 +169,9 @@ const validateMiddleware = require('../middlewares/validateMiddleware');
  */
 
 
-router.post('/register', validateMiddleware(registrationSchemaValidation), registerController);
-router.post('/login', validateMiddleware(loginSchemaValidation), loginController);
-router.post('/refresh-token', refreshTokenController);
+router.post('/register', validateMiddleware(registrationSchemaValidation),registerLimiter, registerController);
+router.post('/login', validateMiddleware(loginSchemaValidation),loginLimiter, loginController);
+router.post('/refresh-token',refreshTokenLimiter, refreshTokenController);
 router.post('/logout', logOutController)
 router.post('/logout-all-devices',protect, logOutAllDevicesController)
 
