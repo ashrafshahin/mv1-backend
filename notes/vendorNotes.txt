@@ -1,0 +1,69 @@
+
+
+sparse: true, // Empty rakhle jate Null na hoi...
+
+Code syntax ঠিক আছে, কিন্তু আবারও বলি, behavior টা ভালো করে বুঝে নাও:
+userSchema.pre('save', function (next) {
+    if (this.isModified('role') && this.role === 'vendor') {
+        this.status = 'active';
+    } else {
+        this.status = 'pending';
+        this.shopName = undefined;
+    }
+
+    next();
+});
+Result: ❌
+Customer → Vendor
+user.role = 'vendor';
+await user.save();
+isModified('role') → true
+role === 'vendor' → true
+ফলাফল:
+status = 'active' // BUT //
+Vendor user শুধু name update করলো
+user.name = 'Ashraf';
+await user.save();
+isModified('role') → false
+
+ফলাফল:
+
+status = 'pending'
+shopName = undefined
+
+❌
+
+Vendor user pending হয়ে যাবে। ❌
+
+
+
+
+
+
+
+
+final===
+আর যদি শুধু role change হওয়ার সময় status update করতে চাও:
+
+role change হলেই শুধু logic run করতে চাইলে:
+
+যদি তোমার আসল উদ্দেশ্য হয়:
+
+Role change করে vendor হলে active হবে, অন্য role হলে pending হবে।
+
+তাহলে:
+
+userSchema.pre('save', function (next) {
+    if (this.isModified('role')) {
+        if (this.role === 'vendor') {
+            this.status = 'active';
+        } else {
+            this.status = 'pending';
+            this.shopName = undefined;
+        }
+    }
+
+    next();
+});
+
+এখানে role modify না হলে middleware status পরিবর্তন করবে না।
