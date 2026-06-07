@@ -4,8 +4,8 @@ const router = express.Router()
 
 const { verifyEmail } = require('../controllers/verifyEmail');
 const { protect, restrictTo } = require('../middlewares/authMiddleware');
-const { registrationSchemaValidation, loginSchemaValidation } = require('../validations/auth.validation');
-const { registerController, loginController, refreshTokenController, logOutController, logOutAllDevicesController } = require('../controllers/authController');
+const { registrationSchemaValidation, loginSchemaValidation, vendorValidationSchema } = require('../validations/auth.validation');
+const { registerController, loginController, refreshTokenController, logOutController, logOutAllDevicesController, registerVendorController } = require('../controllers/authController');
 const validateMiddleware = require('../middlewares/validateMiddleware');
 const { registerLimiter, loginLimiter, refreshTokenLimiter } = require('../middlewares/rateLimiter');
 
@@ -173,9 +173,10 @@ router.post('/register', validateMiddleware(registrationSchemaValidation),regist
 router.post('/login', validateMiddleware(loginSchemaValidation),loginLimiter, loginController);
 router.post('/refresh-token',refreshTokenLimiter, refreshTokenController);
 router.post('/logout', logOutController)
-router.post('/logout-all-devices',protect, logOutAllDevicesController)
+router.post('/logout-all-devices', protect, logOutAllDevicesController)
+router.post('/register-vendor', validateMiddleware(vendorValidationSchema),registerLimiter, registerVendorController )
 
-router.get('/verify-email', verifyEmail);
+router.get('/verify-email', validateMiddleware(loginSchemaValidation), verifyEmail);
 
 // router.get('/admin/dashboard', protect, restrictTo('admin'))
 

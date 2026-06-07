@@ -1,7 +1,16 @@
+work flow-
+1. userSchema te info add kora...
+2. userSchema save korar age vendor role thik korse...
+3. vendor Validation Schema banaise in authValidation.js
+4. New Vendor register Controller banaise authController.js e
+5. Auth Routes create korse... Validation, Limiter correctly likte hobe
+6. 
+
 
 
 sparse: true, // Empty rakhle jate Null na hoi...
 
+=== Wrong thinking chilo=== 
 Code syntax ঠিক আছে, কিন্তু আবারও বলি, behavior টা ভালো করে বুঝে নাও:
 userSchema.pre('save', function (next) {
     if (this.isModified('role') && this.role === 'vendor') {

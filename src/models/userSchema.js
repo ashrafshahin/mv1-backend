@@ -112,7 +112,7 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 
 // === THIS IS IN VIDEO ==== ❌
 // userSchema.pre('save', async function (next) {
-//     if (!this.isModified('role') && this.role === 'vendor') {
+//     if (!this.isModified('role') && this.role !== 'vendor') {
 //         this.status = 'pending'
 //     }
 //     if (this.role !== 'vendor') {

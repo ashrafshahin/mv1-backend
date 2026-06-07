@@ -211,7 +211,7 @@ exports.logOutController = async (req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken
         if (!refreshToken) {
-           return res.status(204).send()
+            return res.status(204).send()
         }
         // find user
         const user = await User.findOne({
@@ -257,14 +257,14 @@ exports.logOutAllDevicesController = async (req, res) => {
         res.clearCookie('refreshToken', {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite:'strict'
+            sameSite: 'strict'
         })
 
         res.status(200).json({
             success: true,
             message: 'Logged Out from All Devices...'
         })
-        
+
     } catch (error) {
         console.log(error, 'Logout All Devices Error...');
         return res.status(500).json({
@@ -275,6 +275,59 @@ exports.logOutAllDevicesController = async (req, res) => {
 }
 
 
+exports.registerVendorController = async (req, res) => {
+    try {
+        // Data already validate kora hoise...
+        const validateVendorData = req.body;
+        const { name, email, phone, password, shopName, shopDestription, shopAddress, nidNumber, bankInfo } = validateVendorData
+
+        // Duplicate vendor check
+        const existingVendor = await User.findOne({ email })
+        if (existingVendor) {
+            return res.status(409).json({ success: false, message: 'This Email already used to register a vendor, Please login now... ' })
+        };
+
+        // Duplicate NID check
+        const existingNID = await User.findOne({ nidNumber })
+        if (existingNID) {
+            return res.status(409).json({ success: false, message: 'This NID already used to register a vendor, Use another NID number... ' })
+        };
+
+        const newVendor = new User({
+            name: name,
+            email: email,
+            password: password,
+            phone: phone,
+            shopName: shopName,
+            shopAddress: shopAddress,
+            shopDestription: shopDestription,
+            nidNumber: nidNumber,
+            bankInfo: bankInfo,
+            role: 'vendor',
+            status: 'pending'
+        })
+        await newVendor.save()
+        return res.status(201).json({
+            success: true,
+            vendor: {
+                id: newVendor._id,
+                name: newVendor.name,
+                email: newVendor.email,
+                role: newVendor.role,
+                status: newVendor.status,
+            }
+        })
+
+
+
+    } catch (error) {
+        console.log(error, 'Vendor Register related Error...');
+        return res.status(500).json({
+            success: false,
+            message: 'Server Error during Vendor Register process...'
+        })
+    }
+}
 
 // Notes:
 // expiresIn:           new Date(Date.now() + 7*24*60*60*1000) = 604800000 milliseconds

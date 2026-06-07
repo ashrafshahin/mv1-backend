@@ -47,5 +47,29 @@ const loginSchemaValidation = z.object({
 
 })
 
+const vendorValidationSchema = z.object({
+    name: z.string().min(2).max(50).trim(),
+    email: z.string().email().toLowerCase().trim(),
+    password: z.string().min(8).regex(/[a-z]/).regex(/[A-Z]/).regex(/[0-9]/).regex(/[^a-zA-Z0-9]/),
+    phone: z.string().regex(/^\+?[1-9]\d{1,14}$/).optional(),
 
-module.exports = { registrationSchemaValidation, loginSchemaValidation }
+    // vendor specific
+    shopName: z.string()
+        .min(3, { message: 'Shop name minimum 3 characters...' })
+        .max(100, { message: 'Shop name maximum 100 characters...' })
+        .trim(),
+    shopDestription: z.string().max(1000, { message: 'Shop Description max 1000 characters...' }).trim(),
+    shopAddress: z.string().min(10).max(200).trim(),
+    nidNumber: z.string().min(10).trim(),
+    bankInfo: {
+        bankName: z.string().min(2).max(300).trim(),
+        branchName: z.string().min(2).max(200).trim(),
+        accountNumber: z.string().min(10).trim(),
+        accountHolder: z.string().min(2).max(100).trim(),
+
+    }
+
+})
+
+
+module.exports = { registrationSchemaValidation, loginSchemaValidation, vendorValidationSchema }
