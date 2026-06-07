@@ -6,6 +6,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
 const authRoutes = require('./routes/authRoutes')
+const adminRoutes = require('./routes/adminRoutes')
 const dbConfig = require('./config/dbConfig');
 
 const swaggerUi = require('swagger-ui-express');
@@ -27,6 +28,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs) )
 // Routes 
 app.use('/api/v1/', apiLimiter)
 app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/admin', adminRoutes)
 
 // Database configaration...
 dbConfig()

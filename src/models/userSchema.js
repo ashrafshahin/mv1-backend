@@ -39,7 +39,8 @@ const userSchema = new mongoose.Schema({
         enum: ['customer', 'admin', 'vendor'],
         default: 'customer',
     },
-    // vendor work...//
+
+ // ==== vendor work... ===== //
     shopName: {
         type: String,
         unique: true,
@@ -75,7 +76,8 @@ const userSchema = new mongoose.Schema({
     rejectReason: {
         type: String,
     },
-    // vendor work ends...//
+
+//...... vendor work ends ..... ...//
 
     isEmailVerified: {
         type: Boolean,

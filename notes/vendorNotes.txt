@@ -4,7 +4,18 @@ work flow-
 3. vendor Validation Schema banaise in authValidation.js
 4. New Vendor register Controller banaise authController.js e
 5. Auth Routes create korse... Validation, Limiter correctly likte hobe
-6. 
+6. admin Approval controller banabo
+7. admin routes banabo 
+8. restrictTo te user na thakle ki hobe... bosabo
+9. admin er controllers banano and routes e add korbo
+10. sob controller banabo and routes banabo...
+11. app.js e adminRoutes deye dete hobe, require koiro...
+
+
+
+
+.sort({createdAt: -1}); decending order
+.sort({createdAt: +1}); accending order
 
 
 

@@ -248,7 +248,7 @@ exports.logOutAllDevicesController = async (req, res) => {
         const user = await User.findById(req.user.id)
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found...' })
-        }
+        };
         // refresh tokens clear kore delam
         user.refreshTokens = []
         await user.save()
@@ -263,7 +263,7 @@ exports.logOutAllDevicesController = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'Logged Out from All Devices...'
-        })
+        });
 
     } catch (error) {
         console.log(error, 'Logout All Devices Error...');
@@ -271,7 +271,7 @@ exports.logOutAllDevicesController = async (req, res) => {
             success: false,
             message: 'Server Error during logout all Devices...'
         })
-    }
+    };
 }
 
 
@@ -293,7 +293,7 @@ exports.registerVendorController = async (req, res) => {
             return res.status(409).json({ success: false, message: 'This NID already used to register a vendor, Use another NID number... ' })
         };
 
-        const newVendor = new User({
+        const user = new User({
             name: name,
             email: email,
             password: password,
@@ -305,18 +305,18 @@ exports.registerVendorController = async (req, res) => {
             bankInfo: bankInfo,
             role: 'vendor',
             status: 'pending'
-        })
-        await newVendor.save()
+        });
+        await user.save()
         return res.status(201).json({
             success: true,
             vendor: {
-                id: newVendor._id,
-                name: newVendor.name,
-                email: newVendor.email,
-                role: newVendor.role,
-                status: newVendor.status,
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                status: user.status,
             }
-        })
+        });
 
 
 
@@ -325,7 +325,7 @@ exports.registerVendorController = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Server Error during Vendor Register process...'
-        })
+        });
     }
 }
 
