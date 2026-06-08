@@ -1,0 +1,87 @@
+
+
+=====
+Our admin workflow:
+
+pending → approved
+pending → rejected
+approved → suspended
+suspended → approved
+
+=====
+
+getAdminStats: 
+akta route e sob information anar jonno ...
+সাধারণত Admin Dashboard-এর summary data আনার controller।
+
+ধরো Admin login করার পর dashboard-এ এই ধরনের cards দেখাবে:
+
+Total Users: 1250
+Total Vendors: 87
+Pending Vendors: 12
+Total Products: 5420
+Pending Products: 45
+Total Orders: 3201
+Total Revenue: ৳1,250,000
+
+এই সব data এক API call-এ আনার জন্য getAdminStats controller ব্যবহার করা হয়।
+
+উদাহরণ: GET /api/admin/stats
+
+----xxx === get admin stats controller explanation ----
+
+1. totalVendors: { $sum: 1 }, 
+akta akta kore vendor ja ase sob chole asbe ai command er modhome
+
+2. approvedVendor: {$sum: { $cond: [{ $eq: ['$status', 'approved'] }, 1, 0] } },
+condition + status + approved hole + equal jinish return korbe.
+mane approved status ase sob vendor dekhabe...
+
+1 = add 1 until search complete
+0 = no more
+$cond = condition
+$eq = equal 
+
+
+Learning Point
+তুমি এখন Admin Action Pattern শিখছো।
+Approve, Reject, Suspend, Reactivate — সব controller-এর structure প্রায় একই হবে:
+1. Get ID
+2. Find Vendor
+3. Validate Role
+4. Validate Current Status
+5. Update Status
+6. Save
+7. Return Response
+
+===== 
+দুটো style-ই valid।
+
+Style 1
+const vendor = await User.findById(id);
+vendor.status = 'rejected';
+await vendor.save();
+
+Style 2
+const vendor = await User.findOneAndUpdate(
+   query,
+   update,
+   { new: true }
+);
+
+কিন্তু একই controller-এ দুই style mix করা উচিত না।
+
+আমি হলে approve controller-এর মতো consistency রাখতাম:
+
+findById()
+→ validate
+→ change status
+→ save()
+
+কারণ তুমি এখনও learning phase-এ আছো, এটা debug করাও সহজ এবং status transition logic-ও পরিষ্কার দেখা যায়।
+
+
+======
+
+
+

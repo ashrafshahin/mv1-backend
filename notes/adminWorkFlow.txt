@@ -1,0 +1,35 @@
+তোমার বর্তমান work flow
+
+Customer
+role = customer
+status = active
+
+Vendor
+role = vendor
+status = pending
+
+Admin approve:
+pending → approved
+Suspend: approved → suspended
+
+Reactivate: suspended → approved
+
+এটা কাজ করবে। ✅
+
+Vendor lifecycle:
+-----------------------
+pending → active
+pending → rejected
+active → suspended
+suspended → active
+
+-------
+
+What i am doing
+------------------
+Customer → active
+Admin → active
+Vendor (new) → pending
+Vendor (approved) → active
+Vendor (rejected) → rejected
+Vendor (suspended) → suspended

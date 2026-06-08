@@ -1,0 +1,253 @@
+Multi-vendor eCommerce project-এ Admin related কাজ অনেক বড় হয়।
+Admin Dashboard এর প্রধান Modules
+
+1. Vendor Management
+
+Admin Vendor approve/reject করবে।
+
+Features:
+Pending vendors list
+Approve vendor
+Reject vendor
+Suspend vendor
+Reactivate vendor
+Vendor details view
+Vendor documents (NID, Trade License)
+Vendor Status Lifecycle
+pending
+   │
+   ├── approve → active
+   │
+   └── reject → rejected
+
+active
+   │
+   └── suspend → suspended
+
+suspended
+   │
+   └── reactivate → active
+
+Schema example:
+
+status: {
+    type: String,
+    enum: ['pending', 'active', 'rejected', 'suspended'],
+    default: 'pending'
+}
+
+=====
+2. Product Management
+
+Admin সব vendor এর product দেখতে পারবে।
+
+Features
+All products
+Pending products
+Approve product
+Reject product
+Delete product
+Feature product
+Hide product
+
+Product status:
+
+status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending'
+}
+
+
+======
+
+3. Category Management
+
+Admin category create করবে।
+
+Example:
+
+Electronics
+Fashion
+Mobile
+Laptop
+Books
+Home & Kitchen
+
+API:
+
+POST   /api/admin/category
+GET    /api/categories
+PATCH  /api/admin/category/:id
+DELETE /api/admin/category/:id
+
+
+========
+
+4. Order Management
+
+সব vendor এর order admin দেখতে পারবে।
+
+Features
+All orders
+Order details
+Order status update
+Refund request
+Cancel order
+
+Order Status:
+
+pending
+confirmed
+processing
+shipped
+delivered
+cancelled
+refunded
+
+
+======
+
+5. User Management
+
+Admin buyer এবং vendor দুইজনকেই manage করবে।
+
+Features
+View users
+Block user
+Unblock user
+Delete account
+Reset password
+
+=====
+
+6. Commission Management
+
+Multi-vendor business-এর সবচেয়ে important part।
+
+ধরো:
+
+Product Price = 1000 Tk
+
+Admin Commission = 10%
+
+Vendor gets = 900 Tk
+Admin gets = 100 Tk
+
+Schema:
+
+commissionRate: {
+    type: Number,
+    default: 10
+}
+
+====
+
+7. Payout Management
+
+Vendor টাকা withdraw করতে পারবে।
+
+Workflow:
+
+Vendor Request Withdrawal
+          │
+          ▼
+Admin Review
+          │
+     ┌────┴────┐
+     │         │
+ Approve    Reject
+
+Schema:
+
+status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending'
+}
+
+=====
+
+8. Coupon Management
+
+Admin coupon create করবে।
+
+Example:
+
+EID20
+NEWUSER50
+SAVE100
+
+Fields:
+
+code
+discountType
+discountValue
+expireDate
+usageLimit
+
+=====
+
+9. Banner Management
+
+Homepage banner control।
+
+Hero Banner
+Campaign Banner
+Offer Banner
+
+====
+
+10. Review Management
+
+Vendor বা product review admin manage করবে।
+
+Features
+View reviews
+Hide review
+Delete review
+Reported reviews
+
+===
+
+11. Dashboard Analytics
+
+Admin dashboard এ:
+
+Total Users
+Total Vendors
+Total Products
+Total Orders
+Total Revenue
+Total Commission
+Pending Vendors
+Pending Products
+
+====== 
+
+Version 1 (MVP) এ যেগুলো আগে করো
+
+Priority অনুযায়ী:
+
+✅ Authentication & Authorization
+
+✅ Vendor Approval System
+
+✅ Category Management
+
+✅ Product Management
+
+✅ Order Management
+
+✅ Commission Calculation
+
+✅ Dashboard Statistics
+
+পরে add করবে:
+
+Withdrawal System
+Coupons
+Reviews
+Notifications
+Reports
+Advanced Analytics

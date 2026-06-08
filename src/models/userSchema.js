@@ -75,6 +75,22 @@ const userSchema = new mongoose.Schema({
     },
     rejectReason: {
         type: String,
+       
+    },
+    suspendReason: {
+        type: String,      
+    },
+    reActivateReason: {
+        type: String,
+    },
+    reActivateAt: {
+        type: Date,
+    },
+    rejectedAt: {
+        type: Date,     
+    },
+    suspendedAt: {
+        type: Date,      
     },
 
 //...... vendor work ends ..... ...//
@@ -96,7 +112,7 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-    },
+    },  
 
 }, { timestamps: true });
 
@@ -129,9 +145,8 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 userSchema.pre('save', async function (next) {
     if (this.isModified('role')) {
         if (this.role === 'vendor') {
-            this.status = 'active'
-        } else {
             this.status = 'pending'
+        } else {
             this.shopName = undefined
         }
     }
