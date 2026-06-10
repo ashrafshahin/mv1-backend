@@ -1,0 +1,16 @@
+Send Email Varification 
+
+res.json() do not work here...
+
+Here= customer Registration and vendor Registration need to be accomodate perfectly.
+then email will be Sent accordingly...
+
+Vendor work flow is 
+Vendor Registration → Email Verification → Admin Approval → Vendor Active, 
+I can also provide separate HTML templates for:
+
+Email verification success
+Vendor approved by admin
+Vendor rejected by admin
+Resubmit vendor documents request
+Vendor account suspended notification
