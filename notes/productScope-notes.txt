@@ -1,0 +1,17 @@
+Same Rule Other Types er jonno
+
+Correct     	Wrong
+-------         ---------
+String	       x string
+Number	      x  number
+Boolean	     x   boolean
+Date	       x date
+Array	      x  array
+ObjectId	  x  objectId
+Types         x  types 
+
+✅ Correct 
+timestamps: true 
+// lowercase hoi
+
+

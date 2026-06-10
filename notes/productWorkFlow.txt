@@ -1,0 +1,3 @@
+Product Scope full Work Life Cycle
+1. product schema
+2. validation
