@@ -1,0 +1,34 @@
+Mds-MacBook-Air:multi-vendor-backend Shalhizan$ npm i multer-storage-cloudinary
+npm error code ERESOLVE
+npm error ERESOLVE unable to resolve dependency tree
+npm error
+npm error While resolving: multi-vendor-backend@1.0.0
+npm error Found: cloudinary@2.10.0
+npm error node_modules/cloudinary
+npm error   cloudinary@"^2.10.0" from the root project
+npm error
+npm error Could not resolve dependency:
+npm error peer cloudinary@"^1.21.0" from multer-storage-cloudinary@4.0.0
+npm error node_modules/multer-storage-cloudinary
+npm error   multer-storage-cloudinary@"*" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /Users/Shalhizan/.npm/_logs/2026-06-11T07_57_15_359Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /Users/Shalhizan/.npm/_logs/2026-06-11T07_57_15_359Z-debug-0.log
+Mds-MacBook-Air:multi-vendor-backend Shalhizan$ 
+
+
+এখন কী করবে?
+multer-storage-cloudinary install করার দরকার নেই।
+
+যদি install command দিয়ে force করো?
+npm i multer-storage-cloudinary --legacy-peer-deps
+
+install হতে পারে, কিন্তু আমি recommend করব না। তুমি যেহেতু নতুন multi-vendor eCommerce backend বানাচ্ছো, Cloudinary SDK + Multer approach cleaner এবং future-proof।
+
+এখন আমাকে তোমার বর্তমান image upload code (multer setup + product controller) দেখাও। আমি Cloudinary integration-এর production-ready version লিখে দিতে পারব।

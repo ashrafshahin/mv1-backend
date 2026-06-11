@@ -1,3 +1,10 @@
 Product Scope full Work Life Cycle
-1. product schema
-2. validation
+1. product schema -> mongoose
+2. validation -> zod
+3. Image uploads work -> claudinary and multer
+    1. middleware e uploads.js 
+    2. install multer claudinary
+    3. config claudinary
+    4. logo, nid, product Image upload functions
+    5. [ERROR ON multer-claudinary-storage]
+    6.

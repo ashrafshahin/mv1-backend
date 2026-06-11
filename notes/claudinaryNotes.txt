@@ -1,0 +1,63 @@
+
+
+
+***** Documentation: ******
+Set up and configure the SDK
+Install the SDK
+In a terminal in your Node.js environment, run:
+
+---- xxx ---
+terminal
+npm install cloudinary
+
+---- xxx ---
+
+Set your API environment variable
+In a terminal, set your CLOUDINARY_URL environment variable.
+
+Copy the API environment variable format from the API Keys page of the Cloudinary Console Settings. Replace <your_api_key> and <your_api_secret> with your actual values. Your cloud name is already correctly included in the format.
+
+---- xxx --- Important ◊
+On Mac or Linux:
+
+export CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+
+here,
+CLOUDINARY_URL ব্যবহার কবে?
+Cloudinary documentation-এ shortcut হিসেবে দেয়:
+export CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+তাহলে আলাদা করে:
+cloudinary.config({...})
+না লিখলেও চলে।
+
+---- xxx ---
+
+Important
+* When writing your own applications, follow your organization's policy on storing secrets and don't expose your API secret.
+
+* If you use a method that involves writing your environment variable to a file (e.g. dotenv), the file should be excluded from your version control system, so as not to expose it publicly.
+
+Configure Cloudinary
+Create a new file called index.js and copy and paste the following into this file:
+
+----- xxx ----
+index.js
+ 
+    Node.js
+
+// Require the cloudinary library
+const cloudinary = require('cloudinary').v2;
+
+// Return "https" URLs by setting secure: true
+cloudinary.config({
+  secure: true
+});
+
+// Log the configuration
+console.log(cloudinary.config());
+
+---- xxx ----
+
+একটা unique string generate করবে।
+public_id: `product-${Date.now()}-${Math.random().toString(36).substring(7)}`
+
