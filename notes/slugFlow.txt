@@ -1,0 +1,54 @@
+
+SEO-friendly URL slug
+
+পুরো Flow
+const slug = req.body.title
+  .toLowerCase()
+  .trim()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '');
+
+  Input:
+
+"  Apple iPhone 15 Pro Max!!!  "
+
+Step 1:
+
+apple iphone 15 pro max!!!
+
+Step 2:
+
+apple-iphone-15-pro-max-
+
+Step 3:
+
+apple-iphone-15-pro-max
+
+এই শেষ .replace(/^-+|-+$/g, '') না দিলে slug-এর শুরু বা শেষে অপ্রয়োজনীয় - থেকে যেতে পারে, যা SEO-friendly URL এর জন্য ভালো practice না।
+
+
+
+
+explain: 
+g = Global flag।
+/^-+|-+$/g = যদি শুরু এবং শেষ দুই জায়গাতেই hyphen থাকে, দুটোই remove করবে।
+
+
+
+-----  slug package ----- xxxx ------ slugify ----- xxx ----
+
+*** Production Ready Solution ***
+সাধারণত manually regex না লিখে slug package ব্যবহার করা হয়।
+npm install slugify
+import slugify from 'slugify';
+const slug = slugify(req.body.title, {
+  lower: true,
+  strict: true
+});
+Output:
+"Apple iPhone 15 Pro Max!"
+↓
+"apple-iphone-15-pro-max"
+Multi-vendor eCommerce project এর জন্য আমি slugify package ব্যবহার করার পরামর্শ দিবো, কারণ এটা edge case (special character, unicode, multiple spaces ইত্যাদি) ভালোভাবে handle করে।
+
+----- xxxx ------ slugify ----- xxx ----
