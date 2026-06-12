@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const { maxLength, trim, number, url, lowercase } = require('zod');
-const { required } = require('zod/mini');
 const { Schema } = mongoose;
+const User = require('./userSchema')
 
 const productSchema = new Schema({
     title: {
@@ -16,13 +15,19 @@ const productSchema = new Schema({
         maxLength: 5000,
     },
     price: {
-        type: String,
+        type: Number,
         required: true,
         min: 0,
     },
     discountPrice: {
-        type: String,
+        type: Number,
         min: 0,
+        validate: {
+            validator: function (value) {
+                return !value || value <= this.price;
+            },
+            message: 'Discount price cannot exceed regular price'
+        },
     },
     category: {
         type: String,
@@ -46,6 +51,7 @@ const productSchema = new Schema({
     sku: {
         type: String,
         required: true,
+        unique: true,
         sparse: true,
     },
 
@@ -67,7 +73,7 @@ const productSchema = new Schema({
     // vendor Information
     vendor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: User,
+        ref: 'User',
         required: true,
     },
 
@@ -100,8 +106,20 @@ const productSchema = new Schema({
 
 // Index for fast search
 productSchema.index({ title: 'text', description: 'text' });
-productSchema.index({ vendor: 1, ststus: 1 });
+productSchema.index({ vendor: 1, status: 1 });
 productSchema.index({ category: 1 });
+
+// slug work
+// productSchema.pre('save', function (next) {
+//     if (!this.slug) {
+//         this.slug = this.title
+//             .toLowerCase()
+//             .replace(/[^a-zA-Z0-9]+/g, '-')
+//             .replace(/^-+|-+$/g, '');
+//     }
+
+//     next();
+// });
 
 module.exports = mongoose.model('Product', productSchema);
 

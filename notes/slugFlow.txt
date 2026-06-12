@@ -52,3 +52,29 @@ Output:
 Multi-vendor eCommerce project এর জন্য আমি slugify package ব্যবহার করার পরামর্শ দিবো, কারণ এটা edge case (special character, unicode, multiple spaces ইত্যাদি) ভালোভাবে handle করে।
 
 ----- xxxx ------ slugify ----- xxx ----
+
+
+Benefits = Schema-তে slug generate করার সবচেয়ে বড় benefit হলো logic centralize হয়ে যায়।
+1. DRY Principle (Don't Repeat Yourself)
+
+একবার লিখবে, সব জায়গায় কাজ করবে।
+
+✅ Better
+
+Controller-এ করলে
+
+ধরো তোমার ৩টা জায়গা আছে:
+
+Create Product
+Admin Create Product
+Bulk Product Import
+
+তাহলে ৩ জায়গাতেই লিখতে হবে:
+
+slug: title
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+কোনো একটা জায়গায় ভুলে গেলে slug save হবে না।
+

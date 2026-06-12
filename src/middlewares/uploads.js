@@ -1,11 +1,11 @@
 const multer = require("multer");
-const claudinary = require('../config/claudinary');
-const { ClaudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('../config/cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 
 // Vendor logo upload
 const logoStorage = new CloudinaryStorage({
-    claudinary,
+    cloudinary,
     params: (req, file) => ({
         folder: 'vendor/logo',
         allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
@@ -21,7 +21,7 @@ const logoStorage = new CloudinaryStorage({
 
 // Vendor NID / Documents upload
 const nidStorage = new CloudinaryStorage({
-    claudinary,
+    cloudinary,
     params: (req, file) => ({
         folder: 'vendor/nids',
         allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf'],
@@ -34,7 +34,7 @@ const nidStorage = new CloudinaryStorage({
 
 // Product image upload
 const productStorage = new CloudinaryStorage({
-    claudinary,
+    cloudinary,
     params: (req, file) => ({
         folder: 'product',
         allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],

@@ -32,3 +32,9 @@ npm i multer-storage-cloudinary --legacy-peer-deps
 install হতে পারে, কিন্তু আমি recommend করব না। তুমি যেহেতু নতুন multi-vendor eCommerce backend বানাচ্ছো, Cloudinary SDK + Multer approach cleaner এবং future-proof।
 
 এখন আমাকে তোমার বর্তমান image upload code (multer setup + product controller) দেখাও। আমি Cloudinary integration-এর production-ready version লিখে দিতে পারব।
+
+--forse dese kaj koreche...
+
+npm i multer-storage-cloudinary --force 
+
+WORKS TO ...
