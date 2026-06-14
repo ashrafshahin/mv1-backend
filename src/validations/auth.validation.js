@@ -58,18 +58,18 @@ const vendorValidationSchema = z.object({
         .min(3, { message: 'Shop name minimum 3 characters...' })
         .max(100, { message: 'Shop name maximum 100 characters...' })
         .trim(),
-    shopDestription: z.string().max(1000, { message: 'Shop Description max 1000 characters...' }).trim(),
+    shopDescription: z.string().max(1000, { message: 'Shop Description max 1000 characters...' }).trim(),
     shopAddress: z.string().min(10).max(200).trim(),
     nidNumber: z.string().min(10).trim(),
-    bankInfo: {
+    bankInfo: z.object({
         bankName: z.string().min(2).max(300).trim(),
         branchName: z.string().min(2).max(200).trim(),
         accountNumber: z.string().min(10).trim(),
         accountHolder: z.string().min(2).max(100).trim(),
 
-    }
+    }),
 
-})
+});
 
 
 module.exports = { registrationSchemaValidation, loginSchemaValidation, vendorValidationSchema }

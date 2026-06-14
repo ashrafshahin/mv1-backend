@@ -30,7 +30,7 @@ exports.registerController = async (req, res) => {
             password: password,
             phone: phone || undefined,
             role: role || 'customer'
-
+           
         })
         // save user in Database now... both way we can SAVE...
         await user.save()
@@ -86,7 +86,7 @@ exports.registerController = async (req, res) => {
         })
 
     } catch (error) {
-        console.log('Regiater error:...', error); // --500-- internal server problem---
+        console.log('Register error:...', error); // --500-- internal server problem---
         return res.status(500).json({ success: false, message: 'Server error during registration...' })
     }
 };
@@ -279,7 +279,7 @@ exports.registerVendorController = async (req, res) => {
     try {
         // Data already validate kora hoise...
         const validateVendorData = req.body;
-        const { name, email, phone, password, shopName, shopDestription, shopAddress, nidNumber, bankInfo } = validateVendorData
+        const { name, email, phone, password, shopName, shopDestription, shopAddress, nidNumber, bankInfo } = validateVendorData;
 
         // Duplicate vendor check
         const existingVendor = await User.findOne({ email })

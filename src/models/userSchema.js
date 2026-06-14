@@ -128,30 +128,46 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password)
 };
 
-// === THIS IS IN VIDEO ==== ❌
+// === THIS IS IN VIDEO ==== 
+userSchema.pre('save', async function () {
+    if (!this.isModified('role') && this.role === 'vendor') {
+        this.status = 'pending'
+    }
+    if (this.role !== 'vendor') {
+        this.status = 'customer'
+        this.shopName = undefined
+    }
+    // next()
+})
+
+// === ❌===
+
 // userSchema.pre('save', async function (next) {
-//     if (!this.isModified('role') && this.role !== 'vendor') {
-//         this.status = 'pending'
-//     }
-//     if (this.role !== 'vendor') {
-//         this.status = 'customer'
-//         this.shopName = undefined
+//     if (this.isModified('role')) {
+//         if (this.role === 'vendor') {
+//             this.status = 'pending'
+//         } else {
+//             this.shopName = undefined
+//         }
 //     }
 //     next()
 // })
 
-// === ❌===
+// experiment 2
+// userSchema.pre('save', async function (next) {
+//     if (this.isModified('role')) {
+//         this.status = this.role === 'vendor'
+//             ? 'pending'
+//             : 'customer';
+//     }
+//     if (this.isModified('role') && this.role !== 'vendor') {
+//         this.shopName = undefined
+//     }
+//     // next()
+// })
+// ==== ❌====
 
-userSchema.pre('save', async function (next) {
-    if (this.isModified('role')) {
-        if (this.role === 'vendor') {
-            this.status = 'pending'
-        } else {
-            this.shopName = undefined
-        }
-    }
-    next()
-})
+
 
 module.exports = mongoose.model('User', userSchema)
 
@@ -169,3 +185,18 @@ module.exports = mongoose.model('User', userSchema)
 
 
 // { timestamps: true } - aita dele auto create and update date and time dai so alada kore likte hobe na ... just expiresAt delai hobe...
+
+// FLOW OVERVIEW
+// REGISTER(customer / vendor)
+//         ↓
+// LOGIN
+//         ↓
+// APPLY FOR VENDOR(optional)
+//         ↓
+// ADMIN REVIEW
+//    → APPROVE
+//    → REJECT
+//         ↓
+// ROLE = VENDOR + STATUS = APPROVED
+//         ↓
+// ACCESS SELLER DASHBOARD

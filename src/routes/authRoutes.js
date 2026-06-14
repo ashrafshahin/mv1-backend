@@ -169,12 +169,15 @@ const { registerLimiter, loginLimiter, refreshTokenLimiter } = require('../middl
  */
 
 
-router.post('/register', validateMiddleware(registrationSchemaValidation),registerLimiter, registerController);
-router.post('/login', validateMiddleware(loginSchemaValidation),loginLimiter, loginController);
+router.post('/register', validateMiddleware(registrationSchemaValidation), registerLimiter, registerController);
+
+router.post('/register-vendor', validateMiddleware(vendorValidationSchema), registerLimiter, registerVendorController);
+
+router.post('/login', validateMiddleware(loginSchemaValidation), loginLimiter, loginController);
 router.post('/refresh-token',refreshTokenLimiter, refreshTokenController);
 router.post('/logout', logOutController)
-router.post('/logout-all-devices', protect, logOutAllDevicesController)
-router.post('/register-vendor', validateMiddleware(vendorValidationSchema),registerLimiter, registerVendorController )
+router.post('/logout-all-devices', protect, logOutAllDevicesController);
+
 
 router.get('/verify-email', validateMiddleware(loginSchemaValidation), verifyEmail);
 
